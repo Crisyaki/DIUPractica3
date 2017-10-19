@@ -33,16 +33,35 @@ public class UmbralizadoImagen extends javax.swing.JFrame {
     private void initComponents() {
 
         ventanaAbrir = new javax.swing.JFileChooser();
+        jPanel1 = new javax.swing.JPanel();
         menuPadre = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         menuItemAbrir = new javax.swing.JMenuItem();
         menuItemGuardar = new javax.swing.JMenuItem();
-        menuEditar = new javax.swing.JMenu();
-        menuDialogo = new javax.swing.JMenu();
         menuSalir = new javax.swing.JMenuItem();
-        menuPedir = new javax.swing.JMenuItem();
+        menuEditar = new javax.swing.JMenu();
+        menuUmbral = new javax.swing.JMenuItem();
+        menuAyuda = new javax.swing.JMenu();
+        menuAcercade = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Umbralizado de imagenes");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 589, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 499, Short.MAX_VALUE)
+        );
 
         menuArchivo.setText("Archivo");
 
@@ -64,30 +83,41 @@ public class UmbralizadoImagen extends javax.swing.JFrame {
         });
         menuArchivo.add(menuItemGuardar);
 
-        menuPadre.add(menuArchivo);
-
-        menuEditar.setText("Editar");
-        menuPadre.add(menuEditar);
-
-        menuDialogo.setText("Cuadro de Dialogo");
-
+        menuSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         menuSalir.setText("Salir");
         menuSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuSalirActionPerformed(evt);
             }
         });
-        menuDialogo.add(menuSalir);
+        menuArchivo.add(menuSalir);
 
-        menuPedir.setText("Pedir dato");
-        menuPedir.addActionListener(new java.awt.event.ActionListener() {
+        menuPadre.add(menuArchivo);
+
+        menuEditar.setText("Editar");
+
+        menuUmbral.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        menuUmbral.setText("Seleccionar Umbral");
+        menuUmbral.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuPedirActionPerformed(evt);
+                menuUmbralActionPerformed(evt);
             }
         });
-        menuDialogo.add(menuPedir);
+        menuEditar.add(menuUmbral);
 
-        menuPadre.add(menuDialogo);
+        menuPadre.add(menuEditar);
+
+        menuAyuda.setText("Ayuda");
+
+        menuAcercade.setText("Acerca de");
+        menuAcercade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAcercadeActionPerformed(evt);
+            }
+        });
+        menuAyuda.add(menuAcercade);
+
+        menuPadre.add(menuAyuda);
 
         setJMenuBar(menuPadre);
 
@@ -95,11 +125,17 @@ public class UmbralizadoImagen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 637, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 498, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -107,6 +143,7 @@ public class UmbralizadoImagen extends javax.swing.JFrame {
 
     private void menuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAbrirActionPerformed
         JFileChooser fc = new JFileChooser();
+        añadirFiltros(fc);
         int res = fc.showOpenDialog(null);
         //ventanaAbrir.showOpenDialog(null);
         if(res == JFileChooser.APPROVE_OPTION){
@@ -120,28 +157,13 @@ public class UmbralizadoImagen extends javax.swing.JFrame {
                          "Salir",
                          JOptionPane.YES_NO_OPTION);
         if(res== JOptionPane.YES_OPTION){
-            System.out.println("Terminar la aplicaciion");
+            System.exit(0);
         }
     }//GEN-LAST:event_menuSalirActionPerformed
 
-    private void menuPedirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPedirActionPerformed
-        String res = (String) JOptionPane.showInputDialog(rootPane,
-                "Introduzca nombre del gato",
-                "Nombre gato",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null, //String[] combobox con las posibles opciones
-                "Neko");
-        System.out.println("Nombre del gato: " + res);
-    }//GEN-LAST:event_menuPedirActionPerformed
-
     private void menuItemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGuardarActionPerformed
-        JFileChooser fc = new JFileChooser(".");
-        //Añadir filtros
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Ficheros xml","xml");
-        fc.addChoosableFileFilter(filtro);
-        
-        
+        JFileChooser fc = new JFileChooser(".");      
+        añadirFiltros(fc); 
         int res = fc.showOpenDialog(null);
         //ventanaAbrir.showOpenDialog(null);
         if(res == JFileChooser.APPROVE_OPTION){
@@ -149,6 +171,38 @@ public class UmbralizadoImagen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemGuardarActionPerformed
 
+    private void menuUmbralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUmbralActionPerformed
+         String res = (String) JOptionPane.showInputDialog(rootPane,
+                "Introduzca el umbral a aplicar en la imagen",
+                "Umbral:",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null, //String[] combobox con las posibles opciones
+                "0");
+        System.out.println("Umbral: " + res);
+    }//GEN-LAST:event_menuUmbralActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int res = JOptionPane.showConfirmDialog(rootPane,
+                "¿Estas seguro que quieres salir?",
+                         "Salir",
+                         JOptionPane.YES_NO_OPTION);
+        if(res== JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void menuAcercadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAcercadeActionPerformed
+        JOptionPane.showMessageDialog(rootPane, "Programa creado por...");
+    }//GEN-LAST:event_menuAcercadeActionPerformed
+    
+    private void añadirFiltros(JFileChooser aux){
+        //FileNameExtensionFilter filtro = new FileNameExtensionFilter("Ficheros png","png");
+        aux.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros png","png"));
+        aux.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros gif","gif"));
+        aux.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros jpg","jpg"));
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -185,14 +239,16 @@ public class UmbralizadoImagen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem menuAcercade;
     private javax.swing.JMenu menuArchivo;
-    private javax.swing.JMenu menuDialogo;
+    private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuItemAbrir;
     private javax.swing.JMenuItem menuItemGuardar;
     private javax.swing.JMenuBar menuPadre;
-    private javax.swing.JMenuItem menuPedir;
     private javax.swing.JMenuItem menuSalir;
+    private javax.swing.JMenuItem menuUmbral;
     private javax.swing.JFileChooser ventanaAbrir;
     // End of variables declaration//GEN-END:variables
 }
